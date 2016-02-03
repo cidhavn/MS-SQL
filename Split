@@ -1,0 +1,15 @@
+DECLARE @splitString varchar(1000) = 'A,B,C'
+DECLARE @splitChar varchar(5) = ','
+DECLARE @i int
+
+SET @i = CHARINDEX(@splitChar, @splitString)
+WHILE @i >= 1 
+BEGIN
+	SELECT LEFT(@splitString, @i - 1)
+
+	SET @splitString = SUBSTRING(@splitString, @i + 1, LEN(@splitString) - @i) 
+	SET @i = charindex(@splitChar, @splitString) 
+END
+
+-- last result
+SELECT @splitString
