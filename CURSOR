@@ -6,6 +6,11 @@ SELECT ID, Name
 INTO #TempData
 FROM Employee WITH (NOLOCK)
 
+-- LOACL 僅在此作用域
+-- STATIC 靜態指標
+-- FORWARD_ONLY 只能從第1行移動至最後1行
+-- READ_ONLY 僅能讀取
+
 DECLARE curData CURSOR LOCAL STATIC FORWARD_ONLY READ_ONLY FOR
 SELECT ID, Name FROM #TempData
 
