@@ -16,3 +16,23 @@ SELECT
     max_record_size_in_bytes As '記錄大小上限',
     forwarded_record_count          
 FROM sys.dm_db_index_physical_stats (DB_ID(), OBJECT_ID('dbo.tblunitsVarN'), NULL, NULL , 'DETAILED');
+
+-- ==============================
+-- 查看碎片程度
+-- https://docs.microsoft.com/zh-tw/sql/relational-databases/system-dynamic-management-views/sys-dm-db-index-physical-stats-transact-sql?view=sql-server-2017
+-- ==============================
+SELECT
+    ps.OBJECT_ID,
+    object_name(ps.OBJECT_ID) as '資料表',
+    ps.index_id AS '索引 ID',
+    b.name AS '索引名稱',
+    ps.avg_fragmentation_in_percent AS '邏輯碎片'
+FROM sys.dm_db_index_physical_stats (DB_ID(), NULL, NULL, NULL, NULL) AS ps
+INNER JOIN sys.indexes AS b
+    ON ps.OBJECT_ID = b.OBJECT_ID AND ps.index_id = b.index_id
+WHERE ps.database_id = DB_ID()
+
+-- 索引資訊
+DBCC SHOWCONTIG ('PersonTaAge')
+-- 使用空間
+EXEC sp_spaceused 'PersonTaAge'
