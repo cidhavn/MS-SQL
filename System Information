@@ -33,6 +33,6 @@ INNER JOIN sys.indexes AS b
 WHERE ps.database_id = DB_ID()
 
 -- 索引資訊
-DBCC SHOWCONTIG ('PersonTaAge')
+DBCC SHOWCONTIG ('Table Name')
 -- 使用空間
-EXEC sp_spaceused 'PersonTaAge'
+EXEC sp_spaceused 'Table Name'
