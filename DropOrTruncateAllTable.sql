@@ -31,3 +31,16 @@ INNER JOIN sys.schemas s ON t.[schema_id] = s.[schema_id]
 WHERE t.type = 'U'
 
 PRINT CAST(@SQL AS NTEXT)
+
+--==============================
+-- TRUNCATE Table
+--==============================
+DECLARE @SQL varchar(MAX) = '',
+        @NewLineChar char(2) = char(13) + char(10)
+
+SELECT @SQL =  @SQL + 'TRUNCATE TABLE ' + QUOTENAME(s.NAME) + '.' + QUOTENAME(t.NAME) + @NewLineChar + 'GO' + @NewLineChar
+FROM sys.tables t
+INNER JOIN sys.schemas s ON t.[schema_id] = s.[schema_id]
+WHERE t.type = 'U'
+
+PRINT CAST(@SQL AS NTEXT)
